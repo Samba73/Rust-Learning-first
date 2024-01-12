@@ -26,7 +26,7 @@ pub struct Person {
     last_name: String,
     mobile: String,
     email: String,
-    state: myenums::State,
+    state: State,
 }
 
 impl Person {
