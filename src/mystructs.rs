@@ -30,12 +30,20 @@ pub struct Person {
 }
 
 impl Person {
-    pub fn new
+    fn new
     (first_name: String, last_name: String, mobile: String, 
         email: String, state: myenums::State) -> Self 
         {
             Self { first_name, last_name, mobile, email, state }
     }
+
+    pub fn create_person
+        (first_name: String, last_name: String, mobile: String, email: String, state: State) 
+        -> Person
+        {
+            let p = Person::new(first_name,last_name,mobile,email,state);
+            return p;
+        }
 
     pub fn print_person(&self) 
      {

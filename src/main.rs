@@ -9,8 +9,7 @@ fn main() {
 
     println!("The area of rectangle rect is {}", rect.area());
 
-    let p = Person::new
-    ("Samba".to_string(),"Krishnamurthy".to_string(),
+    let p: Person = Person::create_person("Samba".to_string(),"Krishnamurthy".to_string(),
     "9999999".to_string(),"samba@gmail.com".to_string(),State::TN);
 
     p.print_person();
