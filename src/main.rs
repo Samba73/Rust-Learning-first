@@ -11,7 +11,7 @@ fn main() {
 
     let p = Person::new
     ("Samba".to_string(),"Krishnamurthy".to_string(),
-    "99999".to_string(),"samba@gmail.com".to_string(),State::TN);
+    "9999999".to_string(),"samba@gmail.com".to_string(),State::TN);
 
     p.print_person();
 }
