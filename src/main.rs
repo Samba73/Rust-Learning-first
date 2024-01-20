@@ -1,10 +1,11 @@
-use mystructs::{Rectangle,Person};
+use mystructs::{Rectangle,Person, ClassicCar};
 //use helpers::driving_age;
 use crate::mystructs::myenums::State;
-
+//use crate::iterators;
 
 pub mod helpers;
 pub mod mystructs;
+pub mod iterators;
 /////
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
@@ -52,7 +53,38 @@ impl Inventory {
     }
 }
 ////
+fn add_five<F>(x: i32, mut f:F)
+where
+    F: FnMut(i32)  {
+        f(x);
+    }
 fn main() {
+
+    let ford_model = vec![("Thunderbird", 1960),
+                                            ("Cobra", 1966),
+                                            ("GT", 1967),
+                                            ("Mustang Grande", 1969)];
+
+    let fords = ClassicCar::new(String::from("Ford"),ford_model);
+
+    fords.get_smart_car(|x| {
+        let res: Vec<_> = x.into_iter().filter(|m|m.1>1960).collect();
+        println!("The filter models for {} are {:#?}", fords.make, res);
+    });
+
+    iterators::iterator();
+
+
+    let mut num1 = 6;
+    //let num2 = 5;
+    add_five(5, |x| {num1 += x; println!("closure as parameter to fn {}", num1)});
+    add_five(4, |x| {num1 += x; println!("closure as parameter to fn {}", num1)});
+
+    let mut c1 = |x| { num1 += x; println!("closure same as parameter to fn {}", num1)};
+    c1(5);
+    c1(4);
+
+
     let rect = Rectangle::new(10,20);
 
     println!("The area of rectangle rect is {}", rect.area());
@@ -64,24 +96,55 @@ fn main() {
 
     //println!("Driving Eligibility is {}",driving_age());
 
-    let clsr2 = |x: i32, y| x + y;
-    let clsr = clsr2;
+    let add = |x: i32, y| x + y;
+    let clsr = add;
     println!("The sum of 2 numbers are {}", clsr(2,5));
 
 
     let x = 10;
     let y = 5;
     let clsr1 = || x * y;
-  
+    println!("The closure read from its env {}", clsr1());
     let clsr = clsr1;
     let y = 7;
+
+    // following are how values are captured by closures (reference / move)
+    // Fn trait
+    let list = vec![1, 2, 3];
+    println!("Before defining closure: {:?}", list);
+
+    let only_borrows = || println!("From closure: {:?}", list);
+
+    println!("Before calling closure: {:?}", list);
+    only_borrows();
+    println!("After calling closure: {:?}", list);
+
+    // Fnmut trait
+    let mut list = vec![1, 2, 3];
+    println!("Before defining closure: {:?}", list);
+
+    let mut borrows_mutably = || list.push(7);
+
+    borrows_mutably();
+    println!("After calling closure: {:?}", list);
+
+    //Fnonce trait
+    let str = String::from("hello");
+    let mut x = String::new();
+    let clsronce = || x = str;
+    clsronce();
+    // println!("Original str value is {}", str);
+    println!("New value of x is {}",x);
+
+
+
 
     println!("The product of 2 numbers {} and {} is {}", x, y, clsr());
 
     let cls = |x,y| x + y;
 
-    println!("The result is {}", cls(1,1));
-    // println!("Here the result is {}", cls("Hello".to_string()," world"));    
+    // println!("The result is {}", cls(1,1));
+    println!("Here the result is {}", cls("Hello".to_string()," world"));    
 
     let str1 = "hello".to_string();
     let clsr = |x| println!("{}", x);
@@ -124,6 +187,6 @@ fn main() {
         user_pref2, giveaway2
     );
 
-
+  
 
 }

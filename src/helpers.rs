@@ -1,4 +1,5 @@
 use std::io;
+// use crate::mystructs::ClassicCar;
 pub fn driving_age() -> bool {
     let age_to_drive = 16u8;
 

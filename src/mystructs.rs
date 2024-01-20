@@ -3,6 +3,27 @@ pub mod myenums;
 
 use myenums::State;
 
+pub struct ClassicCar {
+    pub make: String,
+    models: Vec<(&'static str, i32)>,
+}
+
+impl ClassicCar {
+
+    pub fn new(make: String, models: Vec<(& 'static str, i32)>) -> Self {
+        Self {
+            make,
+            models,
+        }
+    }
+
+    pub fn get_smart_car<F>(&self, f:F) 
+        where 
+            F: Fn(&Vec<(&'static str, i32)>)
+            {
+                f(&self.models);
+    }
+}
 pub struct Rectangle {
     width: i32,
     height: i32,
