@@ -1,12 +1,14 @@
 use mystructs::{Rectangle,Person, ClassicCar};
 //use helpers::driving_age;
-use crate::mystructs::myenums::State;
+use crate::{helpers::{largest_i32, largest, largest_char}, mystructs::myenums::State};
 //use crate::iterators;
 
 pub mod helpers;
 pub mod mystructs;
 pub mod iterators;
 /////
+
+
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
@@ -96,10 +98,16 @@ fn main() {
 
     //println!("Driving Eligibility is {}",driving_age());
 
-    let add = |x: i32, y| x + y;
-    let clsr = add;
-    println!("The sum of 2 numbers are {}", clsr(2,5));
-
+    let add = |x: i32, y| {
+        println!("x: {} y: {}", x, y);
+        x + y
+    };
+    let clsr = add(2,5);
+    let print_clsr = |x| println!("The result is {}",(clsr + x));
+    print_clsr(94);
+    // println!("The sum of 2 numbers are {}", clsr(2,5));
+    let another_clsr = clsr * 2;
+    println!("Another clsr is {}", another_clsr);
 
     let x = 10;
     let y = 5;
@@ -187,6 +195,27 @@ fn main() {
         user_pref2, giveaway2
     );
 
-  
+// the following 2 calls are functions to find largest i32    
+let v = vec![23,34,112,45,67];
+let result = largest_i32(&v);
+println!("The largest value in vector {:#?} is {}", v, result);
+
+let v1 = vec![102, 34, 6000, 89, 54, 2, 43, 8];
+let result = largest_i32(&v1);
+println!("The largest value in vector {:#?} is {}", v1, result);
+
+// the following call is to function to find largest char
+let v_char = vec!['s', 'p', 'z', 'g'];
+let result = largest_char(&v_char);
+println!("The largest char in vector {:#?} is {}", v_char, result);
+
+let v_i32 = vec![23,34,112,45,67];
+let result = largest(&v_i32);
+println!("The largest value in vector {:#?} is {}", v_i32, result);
+
+let v_char = vec!['s', 'p', 'y', 'g'];
+let result = largest(&v_char);
+println!("The largest char in vector {:#?} is {}", v_char, result);
+
 
 }
