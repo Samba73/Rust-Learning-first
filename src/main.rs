@@ -1,6 +1,7 @@
+#[allow(unused_variables)]
 use mystructs::{Rectangle,Person, ClassicCar};
 //use helpers::driving_age;
-use crate::{helpers::{largest_i32, largest, largest_char}, mystructs::myenums::State};
+use crate::{helpers::{display_sound, largest, largest_char, largest_i32}, mystructs::{myenums::State, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
 //use crate::iterators;
 
 pub mod helpers;
@@ -209,6 +210,7 @@ let v_char = vec!['s', 'p', 'z', 'g'];
 let result = largest_char(&v_char);
 println!("The largest char in vector {:#?} is {}", v_char, result);
 
+// generic function that have behaviour on generic type that supports Ordering std::cmp::PartialOrd
 let v_i32 = vec![23,34,112,45,67];
 let result = largest(&v_i32);
 println!("The largest value in vector {:#?} is {}", v_i32, result);
@@ -217,5 +219,68 @@ let v_char = vec!['s', 'p', 'y', 'g'];
 let result = largest(&v_char);
 println!("The largest char in vector {:#?} is {}", v_char, result);
 
+// Generic struct
+
+let r = Rect { width: 5, height: 3};
+println!("The are is {}", r.area());
+
+let r1 = Rect { width: 5.5, height: 3.2};
+println!("The are is {}", r1.area());
+
+// let r2 = Rect { width: 7, height: 4.3};
+// println!("The are is {}", r2.area());
+
+// let r3 = Rect { width: 5.1, height: 2};
+// println!("The are is {}", r3.area());
+
+let p = Point { x: 13, y: 4};
+println!("The value of x is {}", p.get_x());
+
+let p_float = Point { x: 2.2, y: 4.5};
+println!("The value of x is {}", p_float.get_x());
+println!("The distance from origin is {}", p_float.distance_from_origin());
+
+let p1 = AnotherPoint { x: 4, y: 7.0};
+let p2 = AnotherPoint { x: "hello", y: 'c'};
+
+let p3 = p1.mix_up(p2);
+println!("The point struct are mixed up with x {} and y {}", p3.x, p3.y);
+
+let d = Dog;
+
+// d.make_sound();
+
+let c = Cat;
+// c.make_sound();
+
+let b = Bird;
+// b.make_sound();
+display_sound(&d);
+display_sound(&c);
+display_sound(&b);
+let car = MotorCar {
+    fuel_reading: 120,
+    fuel_used: 50,
+};
+
+println!("The fuel left in Motorcar from the calculation is  {}",car.calculate_fuel_left());
+car.display_fuel_left();
+
+let cycle = MotorCycle {
+    fuel_reading: 120,
+    fuel_used: 50,
+};
+
+println!("The fuel left in Motorcycle  from the calculation is  {}",cycle.calculate_fuel_left());
+cycle.display_fuel_left();
+
+let na = NewsArticle {
+    headline: "Ram Mandir".to_string(),
+    location: "Ayodhya".to_string(),
+    author: "Narendra Modi".to_string(),
+    content: "Civilization Change".to_string(),
+};
+
+println!("The news article is {}", na.summarize());
 
 }

@@ -1,7 +1,15 @@
 #[allow(dead_code)]
+#[allow(unused_variables)]
 pub mod myenums;
+pub mod traits;
 
 use myenums::State;
+use traits::{MakeSound, Vehicle};
+
+use self::traits::Summary;
+
+// use self::traits::Vehicle;
+// use self::traits::MakeSound;
 
 pub struct ClassicCar {
     pub make: String,
@@ -53,7 +61,7 @@ pub struct Person {
 impl Person {
     fn new
     (first_name: String, last_name: String, mobile: String, 
-        email: String, state: myenums::State) -> Self 
+        email: String, state: State) -> Self 
         {
             Self { first_name, last_name, mobile, email, state }
     }
@@ -82,4 +90,125 @@ impl Person {
                                     });
     }
 
+}
+
+#[allow(dead_code)]
+pub struct Rect<T, U> {
+    pub width: T,
+    pub height: U,
+}
+
+impl <T, U> Rect<T, U> 
+    where 
+    for <'a> &'a T: std::ops::Mul<&'a U, Output = T>
+    {
+    pub fn area(&self) -> T
+
+    {
+        &self.width * &self.height
+    }
+}
+
+pub struct Point<T> {
+    pub x: T,
+    pub y: T,
+}
+
+impl<T> Point<T>{
+    pub fn get_x(&self) -> &T {
+        &self.x
+    }
+
+
+}
+
+impl Point<f32> {
+    pub fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+
+pub struct AnotherPoint<X1, Y1> {
+    pub x: X1,
+    pub y: Y1,
+}
+
+impl<X1, Y1> AnotherPoint<X1, Y1> {
+    pub fn mix_up<X2, Y2>(self, other: AnotherPoint<X2, Y2>) -> AnotherPoint<X1, Y2> {
+        AnotherPoint {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+
+pub struct Dog;
+impl MakeSound for Dog {
+    fn make_sound(&self) -> String {
+        String::from("Woof Woof")
+    }
+}
+
+pub struct Cat;
+impl MakeSound for Cat {
+    fn make_sound(&self)-> String {
+        String::from("Meow Meow")
+    }
+}
+
+pub struct Bird;
+impl MakeSound for Bird {
+    fn make_sound(&self)-> String {
+        String::from("Chirp Chirp")
+    }
+}
+
+pub struct MotorCar {
+    pub fuel_reading: i32,
+    pub fuel_used: i32,
+}
+impl Vehicle for MotorCar {
+    fn calculate_fuel_left(&self) -> i32 {
+        &self.fuel_reading - &self.fuel_used
+    }
+
+    // fn display_fuel_left(&self) {
+    //     println!("The fuel left is {}", &self.calculate_fuel_left());
+    // }
+}
+
+pub struct MotorCycle {
+    pub fuel_reading: i32,
+    pub fuel_used: i32,
+}
+impl Vehicle for MotorCycle {
+    fn calculate_fuel_left(&self) -> i32 {
+        &self.fuel_reading - &self.fuel_used - 5
+    }
+    fn display_fuel_left(&self) {
+        println!("The fuel left in my motorcycle is {}", &self.calculate_fuel_left());
+    }
+}
+pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+}
+impl Summary for NewsArticle {
+    fn summarize(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.username, self.content)
+    }
 }

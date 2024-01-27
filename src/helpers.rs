@@ -1,5 +1,7 @@
 use std::io;
 // use crate::mystructs::ClassicCar;
+use crate::mystructs::traits::MakeSound;
+
 pub fn driving_age() -> bool {
     let age_to_drive = 16u8;
 
@@ -43,4 +45,8 @@ pub fn largest<T: std::cmp::PartialOrd>(list: &Vec<T>) -> &T {
         }
     }
     largest
+}
+
+pub fn display_sound(animal: &impl MakeSound){
+    println!("The animal make {}", animal.make_sound());
 }
