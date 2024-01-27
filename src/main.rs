@@ -1,7 +1,8 @@
 #[allow(unused_variables)]
+#[allow(unused_imports)]
 use mystructs::{Rectangle,Person, ClassicCar};
 //use helpers::driving_age;
-use crate::{helpers::{display_sound, largest, largest_char, largest_i32}, mystructs::{myenums::State, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
+use crate::{helpers::{display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32}, mystructs::{myenums::State, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
 //use crate::iterators;
 
 pub mod helpers;
@@ -273,6 +274,12 @@ let cycle = MotorCycle {
 
 println!("The fuel left in Motorcycle  from the calculation is  {}",cycle.calculate_fuel_left());
 cycle.display_fuel_left();
+// passing trait as object
+get_fuel(&"Car".to_string(),&car);
+get_fuel(&"Motorcycle".to_string(), &cycle);
+
+let new_vehicle = get_vehicle(4);
+println!("The fuel available is {}", new_vehicle.calculate_fuel_left());
 
 let na = NewsArticle {
     headline: "Ram Mandir".to_string(),
@@ -282,5 +289,11 @@ let na = NewsArticle {
 };
 
 println!("The news article is {}", na.summarize());
+
+let v_vehicle: Vec<&dyn Vehicle>= vec![&car, &cycle];
+
+for vehicle in v_vehicle {
+    println!("The dynamic vehicle vector are {}", vehicle.calculate_fuel_left());
+}
 
 }
