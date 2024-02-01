@@ -275,8 +275,8 @@ let cycle = MotorCycle {
 println!("The fuel left in Motorcycle  from the calculation is  {}",cycle.calculate_fuel_left());
 cycle.display_fuel_left();
 
-get_fuel(&"Car".to_string(),&car);
-get_fuel(&"Motorcycle".to_string(), &cycle);
+get_fuel("MotorCar",&car);
+get_fuel("MotorCycle", &cycle);
 // when both parameters are same type
 // get_fuel(&car, &car);
 // when both parameters are different type

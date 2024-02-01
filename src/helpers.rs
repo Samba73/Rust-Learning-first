@@ -70,7 +70,7 @@ pub fn display_sound(animal: &impl MakeSound){
 //     }
 // the fn below is dynamic dispatch (trait object) where the type that implements the trait
 // is known at run time
-pub fn get_fuel(name: &String, vehicle: &dyn Vehicle)
+pub fn get_fuel(name: &str, vehicle: &dyn Vehicle)
     {
         println!("The fuel left in {} after initial consumption is {}", name, vehicle.calculate_fuel_left());
     }
