@@ -274,9 +274,13 @@ let cycle = MotorCycle {
 
 println!("The fuel left in Motorcycle  from the calculation is  {}",cycle.calculate_fuel_left());
 cycle.display_fuel_left();
-// passing trait as object
+
 get_fuel(&"Car".to_string(),&car);
 get_fuel(&"Motorcycle".to_string(), &cycle);
+// when both parameters are same type
+// get_fuel(&car, &car);
+// when both parameters are different type
+// get_fuel(&car, &cyle)
 
 let new_vehicle = get_vehicle(4);
 println!("The fuel available is {}", new_vehicle.calculate_fuel_left());
@@ -294,6 +298,7 @@ let v_vehicle: Vec<&dyn Vehicle>= vec![&car, &cycle];
 
 for vehicle in v_vehicle {
     println!("The dynamic vehicle vector are {}", vehicle.calculate_fuel_left());
+    vehicle.display_fuel_left();
 }
 
 }

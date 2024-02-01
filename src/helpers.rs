@@ -59,6 +59,10 @@ pub fn display_sound(animal: &impl MakeSound){
 //     }
 // the fn below is static dispatch (trait bound) where the type that implements the trait
 // is known at compile time    
+// pub fn get_fuel<T: Vehicle>(name: &String, vehicle: &T)
+//     {
+//         println!("The fuel left in {} after initial consumption is {}", name, vehicle.calculate_fuel_left());
+//     }
 // pub fn get_fuel<T>(name: &String, vehicle: &T)
 //     where T: Vehicle
 //     {
@@ -70,8 +74,18 @@ pub fn get_fuel(name: &String, vehicle: &dyn Vehicle)
     {
         println!("The fuel left in {} after initial consumption is {}", name, vehicle.calculate_fuel_left());
     }
+// pub fn get_fuel<T: Vehicle>(vehicle1: &T, vehicle2: &T)
+//     {
+//         println!("The fuel left (mult)after initial consumption is {}", vehicle1.calculate_fuel_left());
+//         vehicle2.display_fuel_left();
+//     }
+// pub fn get_fuel(vehicle1: &Vehicle, vehicle2: &Vehicle)
+//     {
+//         println!("The fuel left (mult)after initial consumption is {}", vehicle1.calculate_fuel_left());
+//         vehicle2.display_fuel_left();
+//     }
 // following fn uses dynamic dispatch (trait object), the type that implements the trait is known
-// at run time and also dynamically created instance
+// at run time and also dynamically created instance, here trait is return type
 pub fn get_vehicle(whl: i32) -> Box<dyn Vehicle> {
     match whl {
         2 => Box::new(MotorCycle{fuel_reading: 75, fuel_used: 25}),
