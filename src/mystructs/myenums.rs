@@ -5,3 +5,10 @@ pub enum State {
     WB,
     GJ,
 }
+#[derive(PartialEq, Debug)]
+pub enum Transmission {
+    Manual,
+    SemiAuto,
+    Automatic,
+}
+

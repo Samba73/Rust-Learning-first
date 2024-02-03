@@ -3,7 +3,7 @@
 pub mod myenums;
 pub mod traits;
 
-use myenums::State;
+use myenums::{State, Transmission};
 use traits::{MakeSound, Vehicle};
 
 use self::traits::Summary;
@@ -211,4 +211,12 @@ impl Summary for Tweet {
     fn summarize(&self) -> String {
         format!("{}: {}", self.username, self.content)
     }
+}
+
+pub struct NewCar {
+    pub color:          String,
+    pub car_type:       String,
+    pub transmission:   Transmission,
+    pub convertible:    bool,
+    pub brand:          String
 }

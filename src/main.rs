@@ -1,8 +1,9 @@
 #[allow(unused_variables)]
 #[allow(unused_imports)]
 use mystructs::{Rectangle,Person, ClassicCar};
+use capitalize::Capitalize;
 //use helpers::driving_age;
-use crate::{helpers::{display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32}, mystructs::{myenums::State, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
+use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
 //use crate::iterators;
 
 pub mod helpers;
@@ -301,4 +302,59 @@ for vehicle in v_vehicle {
     vehicle.display_fuel_left();
 }
 
+//Car Factory
+
+    let mut car_color           = String::new();
+    let mut car_transmission    = String::new();
+    let mut car_brand           = String::new();
+    let mut car_convertible     = String::new();
+    let mut car_type            = String::new();        
+
+    println!("Enter the car color:");
+    take_input(&mut car_color);
+
+    println!("Enter the car transmission:");
+    take_input(&mut car_transmission);
+
+    println!("Enter the car brand:");
+    take_input(&mut car_brand);
+
+    println!("Enter the car convertible:");
+    take_input(&mut car_convertible);
+
+    println!("Enter the car type:");
+    take_input(&mut car_type);
+
+
+    let car_color           = car_color.trim().to_string().capitalize();
+    let car_transmission    = car_transmission.trim().to_lowercase();
+    let car_brand           = car_brand.trim().to_string();
+    let car_convertible     = car_convertible.trim().to_lowercase();
+    let car_type            = car_type.trim().to_string().capitalize();
+
+
+    let car_transmission = match car_transmission.as_str() {
+        "manual"    => Transmission::Manual,
+        "semiauto"  => Transmission::SemiAuto,
+        "automatic" => Transmission::Automatic,
+        _           => panic!("The car can be only the 3 option Manual, SemiAuto or Automatic"),
+    };
+
+    let car_convertible = match car_convertible.as_str() {
+        "yes"   => true,
+        "no"    => false,
+        _       => panic!("The convertible for car can be either True or False")
+    };
+
+    let my_new_car = car_factory(
+        car_color, 
+        car_transmission, 
+        car_brand, 
+        car_convertible, 
+        car_type);
+
+    println!("Your car has been built with the following specifications:");
+    println!(
+        "Car Brand: {}, Type: {}, Color: {}, Transmission: {:#?}, Convertible: {}",
+        my_new_car.brand, my_new_car.car_type, my_new_car.color, my_new_car.transmission, my_new_car.convertible); 
 }

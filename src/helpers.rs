@@ -1,7 +1,7 @@
 #[allow(unused_must_use)]
 use std::io;
 // use crate::mystructs::ClassicCar;
-use crate::mystructs::{traits::{MakeSound,Vehicle}, MotorCar, MotorCycle};
+use crate::mystructs::{myenums::Transmission, traits::{MakeSound,Vehicle}, MotorCar, MotorCycle, NewCar};
 
 pub fn driving_age() -> bool {
     let age_to_drive = 16u8;
@@ -91,5 +91,28 @@ pub fn get_vehicle(whl: i32) -> Box<dyn Vehicle> {
         2 => Box::new(MotorCycle{fuel_reading: 75, fuel_used: 25}),
         4 => Box::new(MotorCar{fuel_reading:125,fuel_used:35}),
         _ => panic!("Unknown vehicle type"),
+    }
+}
+
+pub fn take_input(user_input: &mut String) -> String {
+    io::stdin()
+        .read_line(user_input).expect("Failed to read input");
+    user_input.to_string()
+         
+}
+
+pub fn car_factory(
+    color:          String,
+    transmission:   Transmission,
+    brand:          String,
+    convertible:    bool,
+    car_type:       String
+) -> NewCar {
+    NewCar {
+        color,
+        transmission,
+        brand,
+        convertible,
+        car_type
     }
 }
