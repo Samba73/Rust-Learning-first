@@ -116,3 +116,41 @@ pub fn car_factory(
         car_type
     }
 }
+
+pub fn vector_merge_sort(v: &[i32]) -> Vec<i32> {
+    let length = v.len();
+
+    if length < 2 {
+        return Vec::from(v);
+    } 
+
+    let mid = length /2 ;
+
+    let left_v = &v[0..mid];
+    let right_v = &v[mid..length];
+
+    let mut v1 = vector_merge_sort(&left_v);
+    let mut v2 = vector_merge_sort(&right_v);
+
+    let return_vector = vector_merge(&mut v1, &mut v2);
+
+    return_vector
+
+}
+
+fn vector_merge(v1: &mut Vec<i32>, v2: &mut Vec<i32>) -> Vec<i32> {
+
+    let mut result = Vec::new();
+
+    while !v1.is_empty() && !v2.is_empty() {
+        if v1[0] <= v2[0] {
+            result.push(v1.remove(0));
+        } else {
+            result.push(v2.remove(0));
+        }
+    }
+    result.extend_from_slice(v1);
+    result.extend_from_slice(v2);
+
+    result
+}

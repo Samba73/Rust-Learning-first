@@ -3,7 +3,7 @@
 use mystructs::{Rectangle,Person, ClassicCar};
 use capitalize::Capitalize;
 //use helpers::driving_age;
-use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
+use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
 //use crate::iterators;
 
 pub mod helpers;
@@ -357,4 +357,9 @@ for vehicle in v_vehicle {
     println!(
         "Car Brand: {}, Type: {}, Color: {}, Transmission: {:#?}, Convertible: {}",
         my_new_car.brand, my_new_car.car_type, my_new_car.color, my_new_car.transmission, my_new_car.convertible); 
+
+    // merge-sort
+
+    let v = vec![11,21,12,31,13];
+    println!("Returned vector is {:#?}", vector_merge_sort(&v));    
 }
