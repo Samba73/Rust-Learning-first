@@ -4,9 +4,9 @@ pub mod myenums;
 pub mod traits;
 
 use myenums::{State, Transmission};
-use traits::{MakeSound, Vehicle};
+use traits::{MakeSound, Vehicle, Summary, Messenger};
 
-use self::traits::Summary;
+use std::cell::RefCell;
 
 // use self::traits::Vehicle;
 // use self::traits::MakeSound;
@@ -219,4 +219,52 @@ pub struct NewCar {
     pub transmission:   Transmission,
     pub convertible:    bool,
     pub brand:          String
+}
+
+#[derive(Debug)]
+pub struct LimitTracker<'a, T: Messenger> {
+    pub message: &'a T,
+    pub value: usize,
+    pub max: usize,
+}
+
+impl<'a, T: Messenger> LimitTracker<'a, T> {
+    pub fn new(message: &'a T, max: usize) -> Self {
+        LimitTracker { message, value: 0, max,}
+    }      
+
+    pub fn set_value(&mut self, value: usize) {
+        self.value = value;
+
+        let percentage_of_max = self.value as f64 / self.max as f64;
+
+        if percentage_of_max >= 1.0 {
+            self.message.send("Error: You are over your quota!");
+        } else if percentage_of_max >= 0.9 {
+            self.message
+                .send("Urgent warning: You've used up over 90% of your quota!");
+        } else if percentage_of_max >= 0.75 {
+            self.message
+                .send("Warning: You've used up over 75% of your quota!");
+        }
+    }     
+
+}    
+
+#[derive(Debug)]
+pub struct Message { 
+    pub sent_messages: RefCell<Vec<String>>,
+}    
+
+impl Message {
+    pub fn new() -> Message {
+        Message { sent_messages: RefCell::new(vec![]), }
+    }
+
+}    
+
+impl Messenger for Message {
+     fn send(&self, message: &str) {
+        self.sent_messages.borrow_mut().push(String::from(message));
+     }    
 }

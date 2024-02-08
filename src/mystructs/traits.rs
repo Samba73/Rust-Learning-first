@@ -13,3 +13,7 @@ pub trait Vehicle {
 pub trait Summary {
     fn summarize(&self) -> String;
 }
+
+pub trait Messenger {
+    fn send(&self, message: &str);
+}

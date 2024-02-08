@@ -1,3 +1,4 @@
+use helpers::messages_sent;
 #[allow(unused_variables)]
 #[allow(unused_imports)]
 use mystructs::{Rectangle,Person, ClassicCar};
@@ -65,301 +66,303 @@ where
     }
 fn main() {
 
-    let ford_model = vec![("Thunderbird", 1960),
-                                            ("Cobra", 1966),
-                                            ("GT", 1967),
-                                            ("Mustang Grande", 1969)];
+//     let ford_model = vec![("Thunderbird", 1960),
+//                                             ("Cobra", 1966),
+//                                             ("GT", 1967),
+//                                             ("Mustang Grande", 1969)];
 
-    let fords = ClassicCar::new(String::from("Ford"),ford_model);
+//     let fords = ClassicCar::new(String::from("Ford"),ford_model);
 
-    fords.get_smart_car(|x| {
-        let res: Vec<_> = x.into_iter().filter(|m|m.1>1960).collect();
-        println!("The filter models for {} are {:#?}", fords.make, res);
-    });
+//     fords.get_smart_car(|x| {
+//         let res: Vec<_> = x.into_iter().filter(|m|m.1>1960).collect();
+//         println!("The filter models for {} are {:#?}", fords.make, res);
+//     });
 
-    iterators::iterator();
-
-
-    let mut num1 = 6;
-    //let num2 = 5;
-    add_five(5, |x| {num1 += x; println!("closure as parameter to fn {}", num1)});
-    add_five(4, |x| {num1 += x; println!("closure as parameter to fn {}", num1)});
-
-    let mut c1 = |x| { num1 += x; println!("closure same as parameter to fn {}", num1)};
-    c1(5);
-    c1(4);
+//     iterators::iterator();
 
 
-    let rect = Rectangle::new(10,20);
+//     let mut num1 = 6;
+//     //let num2 = 5;
+//     add_five(5, |x| {num1 += x; println!("closure as parameter to fn {}", num1)});
+//     add_five(4, |x| {num1 += x; println!("closure as parameter to fn {}", num1)});
 
-    println!("The area of rectangle rect is {}", rect.area());
-
-    let p: Person = Person::create_person("Samba".to_string(),"Krishnamurthy".to_string(),
-    "9999999".to_string(),"samba@gmail.com".to_string(),State::TN);
-
-    p.print_person();
-
-    //println!("Driving Eligibility is {}",driving_age());
-
-    let add = |x: i32, y| {
-        println!("x: {} y: {}", x, y);
-        x + y
-    };
-    let clsr = add(2,5);
-    let print_clsr = |x| println!("The result is {}",(clsr + x));
-    print_clsr(94);
-    // println!("The sum of 2 numbers are {}", clsr(2,5));
-    let another_clsr = clsr * 2;
-    println!("Another clsr is {}", another_clsr);
-
-    let x = 10;
-    let y = 5;
-    let clsr1 = || x * y;
-    println!("The closure read from its env {}", clsr1());
-    let clsr = clsr1;
-    let y = 7;
-
-    // following are how values are captured by closures (reference / move)
-    // Fn trait
-    let list = vec![1, 2, 3];
-    println!("Before defining closure: {:?}", list);
-
-    let only_borrows = || println!("From closure: {:?}", list);
-
-    println!("Before calling closure: {:?}", list);
-    only_borrows();
-    println!("After calling closure: {:?}", list);
-
-    // Fnmut trait
-    let mut list = vec![1, 2, 3];
-    println!("Before defining closure: {:?}", list);
-
-    let mut borrows_mutably = || list.push(7);
-
-    borrows_mutably();
-    println!("After calling closure: {:?}", list);
-
-    //Fnonce trait
-    let str = String::from("hello");
-    let mut x = String::new();
-    let clsronce = || x = str;
-    clsronce();
-    // println!("Original str value is {}", str);
-    println!("New value of x is {}",x);
+//     let mut c1 = |x| { num1 += x; println!("closure same as parameter to fn {}", num1)};
+//     c1(5);
+//     c1(4);
 
 
+//     let rect = Rectangle::new(10,20);
+
+//     println!("The area of rectangle rect is {}", rect.area());
+
+//     let p: Person = Person::create_person("Samba".to_string(),"Krishnamurthy".to_string(),
+//     "9999999".to_string(),"samba@gmail.com".to_string(),State::TN);
+
+//     p.print_person();
+
+//     //println!("Driving Eligibility is {}",driving_age());
+
+//     let add = |x: i32, y| {
+//         println!("x: {} y: {}", x, y);
+//         x + y
+//     };
+//     let clsr = add(2,5);
+//     let print_clsr = |x| println!("The result is {}",(clsr + x));
+//     print_clsr(94);
+//     // println!("The sum of 2 numbers are {}", clsr(2,5));
+//     let another_clsr = clsr * 2;
+//     println!("Another clsr is {}", another_clsr);
+
+//     let x = 10;
+//     let y = 5;
+//     let clsr1 = || x * y;
+//     println!("The closure read from its env {}", clsr1());
+//     let clsr = clsr1;
+//     let y = 7;
+
+//     // following are how values are captured by closures (reference / move)
+//     // Fn trait
+//     let list = vec![1, 2, 3];
+//     println!("Before defining closure: {:?}", list);
+
+//     let only_borrows = || println!("From closure: {:?}", list);
+
+//     println!("Before calling closure: {:?}", list);
+//     only_borrows();
+//     println!("After calling closure: {:?}", list);
+
+//     // Fnmut trait
+//     let mut list = vec![1, 2, 3];
+//     println!("Before defining closure: {:?}", list);
+
+//     let mut borrows_mutably = || list.push(7);
+
+//     borrows_mutably();
+//     println!("After calling closure: {:?}", list);
+
+//     //Fnonce trait
+//     let str = String::from("hello");
+//     let mut x = String::new();
+//     let clsronce = || x = str;
+//     clsronce();
+//     // println!("Original str value is {}", str);
+//     println!("New value of x is {}",x);
 
 
-    println!("The product of 2 numbers {} and {} is {}", x, y, clsr());
 
-    let cls = |x,y| x + y;
 
-    // println!("The result is {}", cls(1,1));
-    println!("Here the result is {}", cls("Hello".to_string()," world"));    
+//     println!("The product of 2 numbers {} and {} is {}", x, y, clsr());
 
-    let str1 = "hello".to_string();
-    let clsr = |x| println!("{}", x);
-    clsr("world");
-    clsr("world2");
+//     let cls = |x,y| x + y;
 
-    let mut str = "hello".to_string();
-    let mut clsr = |x| str.push_str(x);
-    clsr(" world");
-    clsr(" world2");
-    clsr(" world3");
-    println!("fnmut {}",str);
+//     // println!("The result is {}", cls(1,1));
+//     println!("Here the result is {}", cls("Hello".to_string()," world"));    
+
+//     let str1 = "hello".to_string();
+//     let clsr = |x| println!("{}", x);
+//     clsr("world");
+//     clsr("world2");
+
+//     let mut str = "hello".to_string();
+//     let mut clsr = |x| str.push_str(x);
+//     clsr(" world");
+//     clsr(" world2");
+//     clsr(" world3");
+//     println!("fnmut {}",str);
 
     
 
-   let mut y = String::new();     
-   let clsr = ||y = str1;
-   clsr(); 
+//    let mut y = String::new();     
+//    let clsr = ||y = str1;
+//    clsr(); 
   
-   println!("{}",y);
+//    println!("{}",y);
    
 
-    //////////////
-    //
-    let store = Inventory {
-        shirts: vec![ShirtColor::Blue, ShirtColor::Red, ShirtColor::Blue],
-    };
+//     //////////////
+//     //
+//     let store = Inventory {
+//         shirts: vec![ShirtColor::Blue, ShirtColor::Red, ShirtColor::Blue],
+//     };
 
-    let user_pref1 = Some(ShirtColor::Red);
-    let giveaway1 = store.giveaway(user_pref1);
-    println!(
-        "The user with preference {:?} gets {:?}",
-        user_pref1, giveaway1
-    );
+//     let user_pref1 = Some(ShirtColor::Red);
+//     let giveaway1 = store.giveaway(user_pref1);
+//     println!(
+//         "The user with preference {:?} gets {:?}",
+//         user_pref1, giveaway1
+//     );
 
-    let user_pref2 = None;
-    let giveaway2 = store.giveaway(user_pref2);
-    println!(
-        "The user with preference {:?} gets {:?}",
-        user_pref2, giveaway2
-    );
+//     let user_pref2 = None;
+//     let giveaway2 = store.giveaway(user_pref2);
+//     println!(
+//         "The user with preference {:?} gets {:?}",
+//         user_pref2, giveaway2
+//     );
 
-// the following 2 calls are functions to find largest i32    
-let v = vec![23,34,112,45,67];
-let result = largest_i32(&v);
-println!("The largest value in vector {:#?} is {}", v, result);
+// // the following 2 calls are functions to find largest i32    
+// let v = vec![23,34,112,45,67];
+// let result = largest_i32(&v);
+// println!("The largest value in vector {:#?} is {}", v, result);
 
-let v1 = vec![102, 34, 6000, 89, 54, 2, 43, 8];
-let result = largest_i32(&v1);
-println!("The largest value in vector {:#?} is {}", v1, result);
+// let v1 = vec![102, 34, 6000, 89, 54, 2, 43, 8];
+// let result = largest_i32(&v1);
+// println!("The largest value in vector {:#?} is {}", v1, result);
 
-// the following call is to function to find largest char
-let v_char = vec!['s', 'p', 'z', 'g'];
-let result = largest_char(&v_char);
-println!("The largest char in vector {:#?} is {}", v_char, result);
+// // the following call is to function to find largest char
+// let v_char = vec!['s', 'p', 'z', 'g'];
+// let result = largest_char(&v_char);
+// println!("The largest char in vector {:#?} is {}", v_char, result);
 
-// generic function that have behaviour on generic type that supports Ordering std::cmp::PartialOrd
-let v_i32 = vec![23,34,112,45,67];
-let result = largest(&v_i32);
-println!("The largest value in vector {:#?} is {}", v_i32, result);
+// // generic function that have behaviour on generic type that supports Ordering std::cmp::PartialOrd
+// let v_i32 = vec![23,34,112,45,67];
+// let result = largest(&v_i32);
+// println!("The largest value in vector {:#?} is {}", v_i32, result);
 
-let v_char = vec!['s', 'p', 'y', 'g'];
-let result = largest(&v_char);
-println!("The largest char in vector {:#?} is {}", v_char, result);
+// let v_char = vec!['s', 'p', 'y', 'g'];
+// let result = largest(&v_char);
+// println!("The largest char in vector {:#?} is {}", v_char, result);
 
-// Generic struct
+// // Generic struct
 
-let r = Rect { width: 5, height: 3};
-println!("The are is {}", r.area());
+// let r = Rect { width: 5, height: 3};
+// println!("The are is {}", r.area());
 
-let r1 = Rect { width: 5.5, height: 3.2};
-println!("The are is {}", r1.area());
+// let r1 = Rect { width: 5.5, height: 3.2};
+// println!("The are is {}", r1.area());
 
-// let r2 = Rect { width: 7, height: 4.3};
-// println!("The are is {}", r2.area());
+// // let r2 = Rect { width: 7, height: 4.3};
+// // println!("The are is {}", r2.area());
 
-// let r3 = Rect { width: 5.1, height: 2};
-// println!("The are is {}", r3.area());
+// // let r3 = Rect { width: 5.1, height: 2};
+// // println!("The are is {}", r3.area());
 
-let p = Point { x: 13, y: 4};
-println!("The value of x is {}", p.get_x());
+// let p = Point { x: 13, y: 4};
+// println!("The value of x is {}", p.get_x());
 
-let p_float = Point { x: 2.2, y: 4.5};
-println!("The value of x is {}", p_float.get_x());
-println!("The distance from origin is {}", p_float.distance_from_origin());
+// let p_float = Point { x: 2.2, y: 4.5};
+// println!("The value of x is {}", p_float.get_x());
+// println!("The distance from origin is {}", p_float.distance_from_origin());
 
-let p1 = AnotherPoint { x: 4, y: 7.0};
-let p2 = AnotherPoint { x: "hello", y: 'c'};
+// let p1 = AnotherPoint { x: 4, y: 7.0};
+// let p2 = AnotherPoint { x: "hello", y: 'c'};
 
-let p3 = p1.mix_up(p2);
-println!("The point struct are mixed up with x {} and y {}", p3.x, p3.y);
+// let p3 = p1.mix_up(p2);
+// println!("The point struct are mixed up with x {} and y {}", p3.x, p3.y);
 
-let d = Dog;
+// let d = Dog;
 
-// d.make_sound();
+// // d.make_sound();
 
-let c = Cat;
-// c.make_sound();
+// let c = Cat;
+// // c.make_sound();
 
-let b = Bird;
-// b.make_sound();
-display_sound(&d);
-display_sound(&c);
-display_sound(&b);
-let car = MotorCar {
-    fuel_reading: 120,
-    fuel_used: 50,
-};
+// let b = Bird;
+// // b.make_sound();
+// display_sound(&d);
+// display_sound(&c);
+// display_sound(&b);
+// let car = MotorCar {
+//     fuel_reading: 120,
+//     fuel_used: 50,
+// };
 
-println!("The fuel left in Motorcar from the calculation is  {}",car.calculate_fuel_left());
-car.display_fuel_left();
+// println!("The fuel left in Motorcar from the calculation is  {}",car.calculate_fuel_left());
+// car.display_fuel_left();
 
-let cycle = MotorCycle {
-    fuel_reading: 120,
-    fuel_used: 50,
-};
+// let cycle = MotorCycle {
+//     fuel_reading: 120,
+//     fuel_used: 50,
+// };
 
-println!("The fuel left in Motorcycle  from the calculation is  {}",cycle.calculate_fuel_left());
-cycle.display_fuel_left();
+// println!("The fuel left in Motorcycle  from the calculation is  {}",cycle.calculate_fuel_left());
+// cycle.display_fuel_left();
 
-get_fuel("MotorCar",&car);
-get_fuel("MotorCycle", &cycle);
-// when both parameters are same type
-// get_fuel(&car, &car);
-// when both parameters are different type
-// get_fuel(&car, &cyle)
+// get_fuel("MotorCar",&car);
+// get_fuel("MotorCycle", &cycle);
+// // when both parameters are same type
+// // get_fuel(&car, &car);
+// // when both parameters are different type
+// // get_fuel(&car, &cyle)
 
-let new_vehicle = get_vehicle(4);
-println!("The fuel available is {}", new_vehicle.calculate_fuel_left());
+// let new_vehicle = get_vehicle(4);
+// println!("The fuel available is {}", new_vehicle.calculate_fuel_left());
 
-let na = NewsArticle {
-    headline: "Ram Mandir".to_string(),
-    location: "Ayodhya".to_string(),
-    author: "Narendra Modi".to_string(),
-    content: "Civilization Change".to_string(),
-};
+// let na = NewsArticle {
+//     headline: "Ram Mandir".to_string(),
+//     location: "Ayodhya".to_string(),
+//     author: "Narendra Modi".to_string(),
+//     content: "Civilization Change".to_string(),
+// };
 
-println!("The news article is {}", na.summarize());
+// println!("The news article is {}", na.summarize());
 
-let v_vehicle: Vec<&dyn Vehicle>= vec![&car, &cycle];
+// let v_vehicle: Vec<&dyn Vehicle>= vec![&car, &cycle];
 
-for vehicle in v_vehicle {
-    println!("The dynamic vehicle vector are {}", vehicle.calculate_fuel_left());
-    vehicle.display_fuel_left();
-}
+// for vehicle in v_vehicle {
+//     println!("The dynamic vehicle vector are {}", vehicle.calculate_fuel_left());
+//     vehicle.display_fuel_left();
+// }
 
-//Car Factory
+// //Car Factory
 
-    let mut car_color           = String::new();
-    let mut car_transmission    = String::new();
-    let mut car_brand           = String::new();
-    let mut car_convertible     = String::new();
-    let mut car_type            = String::new();        
+//     let mut car_color           = String::new();
+//     let mut car_transmission    = String::new();
+//     let mut car_brand           = String::new();
+//     let mut car_convertible     = String::new();
+//     let mut car_type            = String::new();        
 
-    println!("Enter the car color:");
-    take_input(&mut car_color);
+//     println!("Enter the car color:");
+//     take_input(&mut car_color);
 
-    println!("Enter the car transmission:");
-    take_input(&mut car_transmission);
+//     println!("Enter the car transmission:");
+//     take_input(&mut car_transmission);
 
-    println!("Enter the car brand:");
-    take_input(&mut car_brand);
+//     println!("Enter the car brand:");
+//     take_input(&mut car_brand);
 
-    println!("Enter the car convertible:");
-    take_input(&mut car_convertible);
+//     println!("Enter the car convertible:");
+//     take_input(&mut car_convertible);
 
-    println!("Enter the car type:");
-    take_input(&mut car_type);
-
-
-    let car_color           = car_color.trim().to_string().capitalize();
-    let car_transmission    = car_transmission.trim().to_lowercase();
-    let car_brand           = car_brand.trim().to_string();
-    let car_convertible     = car_convertible.trim().to_lowercase();
-    let car_type            = car_type.trim().to_string().capitalize();
+//     println!("Enter the car type:");
+//     take_input(&mut car_type);
 
 
-    let car_transmission = match car_transmission.as_str() {
-        "manual"    => Transmission::Manual,
-        "semiauto"  => Transmission::SemiAuto,
-        "automatic" => Transmission::Automatic,
-        _           => panic!("The car can be only the 3 option Manual, SemiAuto or Automatic"),
-    };
+//     let car_color           = car_color.trim().to_string().capitalize();
+//     let car_transmission    = car_transmission.trim().to_lowercase();
+//     let car_brand           = car_brand.trim().to_string();
+//     let car_convertible     = car_convertible.trim().to_lowercase();
+//     let car_type            = car_type.trim().to_string().capitalize();
 
-    let car_convertible = match car_convertible.as_str() {
-        "yes"   => true,
-        "no"    => false,
-        _       => panic!("The convertible for car can be either True or False")
-    };
 
-    let my_new_car = car_factory(
-        car_color, 
-        car_transmission, 
-        car_brand, 
-        car_convertible, 
-        car_type);
+//     let car_transmission = match car_transmission.as_str() {
+//         "manual"    => Transmission::Manual,
+//         "semiauto"  => Transmission::SemiAuto,
+//         "automatic" => Transmission::Automatic,
+//         _           => panic!("The car can be only the 3 option Manual, SemiAuto or Automatic"),
+//     };
 
-    println!("Your car has been built with the following specifications:");
-    println!(
-        "Car Brand: {}, Type: {}, Color: {}, Transmission: {:#?}, Convertible: {}",
-        my_new_car.brand, my_new_car.car_type, my_new_car.color, my_new_car.transmission, my_new_car.convertible); 
+//     let car_convertible = match car_convertible.as_str() {
+//         "yes"   => true,
+//         "no"    => false,
+//         _       => panic!("The convertible for car can be either True or False")
+//     };
 
-    // merge-sort
+//     let my_new_car = car_factory(
+//         car_color, 
+//         car_transmission, 
+//         car_brand, 
+//         car_convertible, 
+//         car_type);
 
-    let v = vec![11,21,12,31,13];
-    println!("Returned vector is {:#?}", vector_merge_sort(&v));    
+//     println!("Your car has been built with the following specifications:");
+//     println!(
+//         "Car Brand: {}, Type: {}, Color: {}, Transmission: {:#?}, Convertible: {}",
+//         my_new_car.brand, my_new_car.car_type, my_new_car.color, my_new_car.transmission, my_new_car.convertible); 
+
+//     // merge-sort
+
+//     let v = vec![11,21,12,31,13];
+//     println!("Returned vector is {:#?}", vector_merge_sort(&v));    
+
+messages_sent()
 }

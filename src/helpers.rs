@@ -1,7 +1,7 @@
 #[allow(unused_must_use)]
 use std::io;
 // use crate::mystructs::ClassicCar;
-use crate::mystructs::{myenums::Transmission, traits::{MakeSound,Vehicle}, MotorCar, MotorCycle, NewCar};
+use crate::mystructs::{myenums::Transmission, traits::{MakeSound,Vehicle}, MotorCar, MotorCycle, NewCar, Message, LimitTracker};
 
 pub fn driving_age() -> bool {
     let age_to_drive = 16u8;
@@ -153,4 +153,17 @@ fn vector_merge(v1: &mut Vec<i32>, v2: &mut Vec<i32>) -> Vec<i32> {
     result.extend_from_slice(v2);
 
     result
+}
+
+pub fn messages_sent() {
+    let msg = Message::new();
+
+    let mut limit_tracker = LimitTracker::new(&msg,  100);
+
+    limit_tracker.set_value(90);
+
+    assert_eq!(msg.sent_messages.borrow().len(), 1);
+
+    println!("The messages are {:#?}", msg);
+
 }
