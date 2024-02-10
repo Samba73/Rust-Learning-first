@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+use std::rc::Rc;        
 use helpers::messages_sent;
 #[allow(unused_variables)]
 #[allow(unused_imports)]
@@ -6,7 +8,7 @@ use capitalize::Capitalize;
 //use helpers::driving_age;
 use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
 //use crate::iterators;
-
+use crate::mystructs::myenums::List::{Cons, Nil};
 pub mod helpers;
 pub mod mystructs;
 pub mod iterators;
@@ -364,5 +366,26 @@ fn main() {
 //     let v = vec![11,21,12,31,13];
 //     println!("Returned vector is {:#?}", vector_merge_sort(&v));    
 
-messages_sent()
+// messages_sent()
+
+let value = Rc::new(RefCell::new(5));
+
+let a = Rc::new(Cons(Rc::clone(&value), Rc::new(Nil)));
+
+let b = Cons(Rc::new(RefCell::new(2)), Rc::clone(&a));
+let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
+
+println!("a before mutating value = {:?}", a);
+println!("b before mutating value = {:?}", b);
+println!("c before mutating value = {:?}", c);
+
+*value.borrow_mut()+=10;
+
+println!("a after mutating value = {:?}", a);
+println!("b after mutating value = {:?}", b);
+println!("c after mutating value = {:?}", c);
+
+
+
+
 }
