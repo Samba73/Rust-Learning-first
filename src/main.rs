@@ -1,12 +1,12 @@
 use std::cell::RefCell;
-use std::rc::Rc;        
+use std::rc::{Rc,Weak};        
 use helpers::messages_sent;
 #[allow(unused_variables)]
 #[allow(unused_imports)]
 use mystructs::{Rectangle,Person, ClassicCar};
 use capitalize::Capitalize;
 //use helpers::driving_age;
-use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
+use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect, Node}};
 //use crate::iterators;
 // use crate::mystructs::myenums::List::{Cons, Nil};
 use crate::mystructs::myenums::ListRef::{Link, Nil};
@@ -367,7 +367,10 @@ fn main() {
 //     let v = vec![11,21,12,31,13];
 //     println!("Returned vector is {:#?}", vector_merge_sort(&v));    
 
+//// interrior mutability -example 1
 // messages_sent()
+
+// // Interior Mutability using RfCell (example 2)
 
 // let value = Rc::new(RefCell::new(5));
 
@@ -386,6 +389,7 @@ fn main() {
 // println!("b after mutating value = {:?}", b);
 // println!("c after mutating value = {:?}", c);
 
+//// below is creatin circular reference . end up with staack overflow
 
 let a = Rc::new(Link(5, RefCell::new(Rc::new(Nil))));
 
@@ -406,11 +410,46 @@ if let Some(l) = a.tail() {
 println!("b rc count after changing a = {}", Rc::strong_count(&b));
 println!("a rc count after changing a = {}", Rc::strong_count(&a));
 
-println!("a after list = {:?}", a);
+// println!("a after list = {:?}", a);
 // println!("a after Rc count = {}", Rc::strong_count(&a));
-// // println!("a tail = {:?}", a.tail());
+//  println!("a tail = {:?}", a.tail());
 
 
 // println!("b after list = {:?}", b);
 // println!("b after Rc count = {}", Rc::strong_count(&b));
+
+
+// circular reference example and avoid memory leak
+
+let leaf = Rc::new(Node{
+     value: 5,
+     parent: RefCell::new(Weak::new()),
+     children: RefCell::new(vec![]),
+
+});
+
+println!("leaf before weak reference = {:?}", leaf.parent.borrow().upgrade());
+
+// println!("Before branch strong count = {}, weak count = {}", Rc::strong_count(&branch), Rc::weak_count(&branch));
+println!("Before leaf strong count = {}, weak count = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+{
+let branch = Rc::new(Node{
+     value: 5,
+     parent: RefCell::new(Weak::new()),
+     children: RefCell::new(vec![Rc::clone(&leaf)]),
+
+});
+
+*leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+
+println!("After branch strong count = {}, weak count = {}", Rc::strong_count(&branch), Rc::weak_count(&branch));
+println!("After leaf strong count = {}, weak count = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+
+println!("leaf after weak reference = {:?}", leaf.parent.borrow().upgrade());
+println!("branch = {:?}", branch);
+}
+println!("leaf = {:?}", leaf);
+println!("leaf end weak reference = {:?}", leaf.parent.borrow().upgrade());
+println!("End leaf strong count = {}, weak count = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+
 }

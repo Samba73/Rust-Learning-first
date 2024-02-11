@@ -7,6 +7,7 @@ use myenums::{State, Transmission};
 use traits::{MakeSound, Vehicle, Summary, Messenger};
 
 use std::cell::RefCell;
+use std::rc::{Rc, Weak};
 
 // use self::traits::Vehicle;
 // use self::traits::MakeSound;
@@ -267,4 +268,11 @@ impl Messenger for Message {
      fn send(&self, message: &str) {
         self.sent_messages.borrow_mut().push(String::from(message));
      }    
+}
+
+#[derive(Debug)]
+pub struct Node {
+    pub value: i32,
+    pub parent: RefCell<Weak<Node>>,
+    pub children: RefCell<Vec<Rc<Node>>>,
 }
