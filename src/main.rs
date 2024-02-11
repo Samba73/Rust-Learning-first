@@ -8,7 +8,8 @@ use capitalize::Capitalize;
 //use helpers::driving_age;
 use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect}};
 //use crate::iterators;
-use crate::mystructs::myenums::List::{Cons, Nil};
+// use crate::mystructs::myenums::List::{Cons, Nil};
+use crate::mystructs::myenums::ListRef::{Link, Nil};
 pub mod helpers;
 pub mod mystructs;
 pub mod iterators;
@@ -368,24 +369,48 @@ fn main() {
 
 // messages_sent()
 
-let value = Rc::new(RefCell::new(5));
+// let value = Rc::new(RefCell::new(5));
 
-let a = Rc::new(Cons(Rc::clone(&value), Rc::new(Nil)));
+// let a = Rc::new(Cons(Rc::clone(&value), Rc::new(Nil)));
 
-let b = Cons(Rc::new(RefCell::new(2)), Rc::clone(&a));
-let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
+// let b = Cons(Rc::new(RefCell::new(2)), Rc::clone(&a));
+// let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
 
-println!("a before mutating value = {:?}", a);
-println!("b before mutating value = {:?}", b);
-println!("c before mutating value = {:?}", c);
+// println!("a before mutating value = {:?}", a);
+// println!("b before mutating value = {:?}", b);
+// println!("c before mutating value = {:?}", c);
 
-*value.borrow_mut()+=10;
+// *value.borrow_mut()+=10;
 
-println!("a after mutating value = {:?}", a);
-println!("b after mutating value = {:?}", b);
-println!("c after mutating value = {:?}", c);
-
-
+// println!("a after mutating value = {:?}", a);
+// println!("b after mutating value = {:?}", b);
+// println!("c after mutating value = {:?}", c);
 
 
+let a = Rc::new(Link(5, RefCell::new(Rc::new(Nil))));
+
+println!("a initial list = {:?}", a);
+println!("a initial Rc count = {}", Rc::strong_count(&a));
+println!("a tail = {:?}", a.tail());
+
+let b = Rc::new(Link(10,RefCell::new(Rc::clone(&a))));
+
+println!("b initial list = {:?}", b);
+println!("b initial Rc count = {}", Rc::strong_count(&b));
+println!("b tail = {:?}", b.tail());
+
+if let Some(l) = a.tail() {
+    *l.borrow_mut() = Rc::clone(&b);
+}
+
+println!("b rc count after changing a = {}", Rc::strong_count(&b));
+println!("a rc count after changing a = {}", Rc::strong_count(&a));
+
+println!("a after list = {:?}", a);
+// println!("a after Rc count = {}", Rc::strong_count(&a));
+// // println!("a tail = {:?}", a.tail());
+
+
+// println!("b after list = {:?}", b);
+// println!("b after Rc count = {}", Rc::strong_count(&b));
 }

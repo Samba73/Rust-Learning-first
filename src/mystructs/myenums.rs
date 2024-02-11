@@ -18,3 +18,18 @@ pub enum List {
     Cons(Rc<RefCell<i32>>, Rc<List>),
     Nil,
 }
+#[derive(Debug)]
+pub enum ListRef{
+    Link(i32, RefCell<Rc<ListRef>>),
+    Nil,
+}
+
+impl ListRef {
+    pub fn tail(&self) -> Option<&RefCell<Rc<ListRef>>> {
+        match self {
+            ListRef::Link(_, item) => Some(item),
+            ListRef::Nil => None,
+        }
+    }    
+
+}
