@@ -9,6 +9,8 @@ use traits::{MakeSound, Vehicle, Summary, Messenger};
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
+use crate::helpers::vector_merge_sort;
+
 // use self::traits::Vehicle;
 // use self::traits::MakeSound;
 
@@ -275,4 +277,51 @@ pub struct Node {
     pub value: i32,
     pub parent: RefCell<Weak<Node>>,
     pub children: RefCell<Vec<Rc<Node>>>,
+}
+
+#[derive(Debug)]
+pub struct AveragedCollection{
+    list: Vec<i32>,
+    average: f64,
+}
+
+impl AveragedCollection{
+
+    // create a new instance
+    pub fn new() -> AveragedCollection{
+        AveragedCollection{ list: Vec::new(), average: 0.0}
+    }
+
+    // add item to vector
+    pub fn add(&mut self, item: i32){
+        self.list.push(item);
+        self.update_average();
+    }
+    
+    // remove item from vector
+    pub fn remove(&mut self) -> Option<i32>{
+        let result = self.list.pop();
+        match result {
+            Some(value) => {
+                self.update_average();
+                Some(value)
+            }
+            None => None,
+        }
+
+        }
+
+    fn update_average(&mut self){
+
+        let total: i32 = self.list.iter().sum();
+        self.average = total as f64 / self.list.len() as f64; 
+
+    }
+
+    pub fn average(&self)-> f64 {
+        self.average
+    }
+
+
+
 }

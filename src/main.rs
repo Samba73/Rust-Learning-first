@@ -6,7 +6,7 @@ use helpers::messages_sent;
 use mystructs::{Rectangle,Person, ClassicCar};
 use capitalize::Capitalize;
 //use helpers::driving_age;
-use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect, Node}};
+use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect, Node, AveragedCollection}};
 //use crate::iterators;
 // use crate::mystructs::myenums::List::{Cons, Nil};
 use crate::mystructs::myenums::ListRef::{Link, Nil};
@@ -451,5 +451,19 @@ println!("branch = {:?}", branch);
 println!("leaf = {:?}", leaf);
 println!("leaf end weak reference = {:?}", leaf.parent.borrow().upgrade());
 println!("End leaf strong count = {}, weak count = {}", Rc::strong_count(&leaf), Rc::weak_count(&leaf));
+
+//OOps implementation reference with struct and implementation
+
+let mut averagecollection = AveragedCollection::new();
+
+println!("The average collection for initial vector = {}", averagecollection.average());
+averagecollection.add(10);
+averagecollection.add(20);
+averagecollection.add(30);
+
+println!("The average collection after adding item = {}", averagecollection.average());
+
+averagecollection.remove();
+println!("The average collection after removing item = {}", averagecollection.average());
 
 }
