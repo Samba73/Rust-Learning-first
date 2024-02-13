@@ -311,12 +311,15 @@ impl AveragedCollection{
 
         }
 
+    // private function that is called post new addition, deletion and specific call to check average    
     fn update_average(&mut self){
 
         let total: i32 = self.list.iter().sum();
         self.average = total as f64 / self.list.len() as f64; 
 
     }
+
+    // return current average to user
 
     pub fn average(&self)-> f64 {
         self.average
