@@ -5,6 +5,7 @@ use helpers::messages_sent;
 #[allow(unused_imports)]
 use mystructs::{Rectangle,Person, ClassicCar};
 use capitalize::Capitalize;
+use crate::helpers::add_twice;
 //use helpers::driving_age;
 use crate::{helpers::{car_factory, display_sound, get_fuel, get_vehicle, largest, largest_char, largest_i32, take_input,vector_merge_sort}, mystructs::{myenums::{State, Transmission}, traits::{MakeSound, Summary, Vehicle}, AnotherPoint, Bird, Cat, Dog, MotorCar, MotorCycle, NewsArticle, Point, Rect, Node, AveragedCollection}};
 //use crate::iterators;
@@ -465,5 +466,8 @@ println!("The average collection after adding item = {}", averagecollection.aver
 
 averagecollection.remove();
 println!("The average collection after removing item = {}", averagecollection.average());
+
+let answer = add_twice(crate::helpers::add_one, 5);
+println!("The answer after adding item = {}", answer);
 
 }
